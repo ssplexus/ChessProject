@@ -1,0 +1,81 @@
+/**
+ * Класс фигуры "слон"
+ */
+public class Bishop extends ChessPiece
+{
+    public Bishop(String color)
+    {
+        super(color);
+    }
+
+    /**
+     * Получение цвета фигуры
+     * @return цвет фигуры
+     */
+    public String getColor()
+    {
+        return color;
+    }
+
+    /**
+     * Метод проверки возможности хода для фигуры
+     * @param chessBoard
+     * @param line
+     * @param column
+     * @param toLine
+     * @param toColumn
+     * @return результат проверки
+     */
+    public boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn)
+    {
+        if(line == toLine && column == toColumn || // Если позиция не изменилась
+                !chessBoard.checkPos(toLine) || !chessBoard.checkPos(toColumn)) // или выходим за доску
+            return false;
+
+        if(Math.abs(toLine - line) == Math.abs(toColumn - column)) // Если разность линий и столбцов по модулю равна
+        {
+            /*
+             Проверки по диагонали относительно текущей позиции
+            */
+
+            if(line < toLine && column < toColumn)
+            {
+                for (int i = line + 1; i < toLine; i++ )
+                    if (chessBoard.board[i][i] != null) return false;
+            }
+            if(line > toLine && column > toColumn)
+            {
+                for (int i = line - 1; i > toLine; i-- )
+                    if (chessBoard.board[i][i] != null) return false;
+            }
+            if(line < toLine && column > toColumn)
+            {
+                for (int i = line + 1, j = column - 1; i < toLine; i++, j--)
+                    if (chessBoard.board[i][j] != null) return false;
+            }
+            if(line > toLine && column < toColumn)
+            {
+                for (int i = line - 1, j = column + 1; i > toLine; i--, j++ )
+                    if (chessBoard.board[i][j] != null) return false;
+            }
+
+            if(chessBoard.board[toLine][toColumn] != null) // Если на конечной позиции есть фигура
+            {
+                if(chessBoard.board[toLine][toColumn].getColor().equals(chessBoard.nowPlayerColor())) // Если это не вражеская фигура то ход невозможен
+                    return false;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Метод получения символьного обозначения фигуры
+     * @return символьное обозначение фигуры
+     */
+    public String getSymbol()
+    {
+        return "B";
+    }
+}
