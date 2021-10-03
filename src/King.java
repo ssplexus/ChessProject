@@ -61,7 +61,8 @@ public class King extends ChessPiece
             {
                 if(chessBoard.board[i][j] != null)
                 {
-                    if(chessBoard.nowPlayerColor().equals("White") && chessBoard.board[i][j].getColor().equals("Black"))
+                    if(chessBoard.nowPlayerColor().equals("White") && chessBoard.board[i][j].getColor().equals("Black") ||
+                            chessBoard.nowPlayerColor().equals("Black") && chessBoard.board[i][j].getColor().equals("White"))
                     {
                         if (chessBoard.board[i][j].canMoveToPosition(chessBoard, i , j, line, column))
                             return true;
